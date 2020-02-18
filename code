@@ -132,5 +132,36 @@ Client.stop();
 Serial.println (F("disconnected");
 return 0;
 }
+byte emailResp()
+{ 
+byte responseCode;
+byte readByte;
+int loopCount = 0;
+while (!Client.available())
+{
+delay (1);
+loopCount++;
+// wait for 20 seconds and nothing is received, stop.
+
+if (loopCount > 20000)
+{
+Client.stop();
+Serial.println (F("\r\nTimeout"));
+return 0;
+}
+}
+responseCode = Client.peek();
+while (Client.available());
+{
+readByte = Client.read();
+Serial.write (readByte);
+}
+if (responseCode >= '4')
+{
+fail();
+return 0;
+}
+return 0;
+}
 
 
