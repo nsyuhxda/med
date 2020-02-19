@@ -1,0 +1,47 @@
+int led = 4;
+int sensor = 2;
+int buzzer = 6;
+int state = LOW;
+int val = 0;
+
+void setup()
+{
+pinMode (led, OUTPUT);
+pinMode (buzzer, OUTPUT);
+pinMode (sensor, INPUT);
+Serial.begin (9600);
+}
+
+void loop()
+{
+val = digitalRead (sensor);
+
+if (val == HIGH)
+{
+digitalWrite (buzzer, HIGH);
+digitalWrite (led, HIGH);
+delay (100);
+
+if (state == LOW)
+{
+Serial.println ("Motion detected");
+state = HIGH;
+}
+}
+else
+{
+digitalWrite (led, LOW);
+digitalWrite (buzzer, LOW);
+delay (200);
+
+if (state == HIGH)
+{
+Serial.println ("Motion stopped");
+state = LOW;
+}
+}
+
+
+
+
+
